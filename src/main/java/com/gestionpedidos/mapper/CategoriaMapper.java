@@ -20,16 +20,20 @@ public interface CategoriaMapper {
     //Listar los brands y cars juntos.
     @Named("withCategoriaId")
     @Mapping(source = "categoria.id", target = "categoriaId")
-    ProductoDTO carToCarDtoWithBrandCarId(ProductoEntity productoEntity);
+    ProductoDTO productoToDtoWithCategoryId(ProductoEntity productoEntity);
 
     @IterableMapping(qualifiedByName = "withCategoriaId")
-    List<ProductoDTO> carsToCarDtos(List<ProductoEntity> productoEntities);
+    List<ProductoDTO> productsToProductsDtos(List<ProductoEntity> productoEntities);
 
 
 
-    void updateBrandCarFromDto(CategoriaDTO brandCarDto, @MappingTarget CategoriaEntity categoriaEntity);
+    // importante para actualizar(me tenia podrido esta wbd)
+    @Mapping(target = "id", ignore = true)
+    // si no ignoramos al actualizar la lista de productos se borrara en casaca
+    @Mapping(target = "productos", ignore = true)
+    void updateCategoryFromDto(CategoriaDTO categoriaDTO, @MappingTarget CategoriaEntity categoriaEntity);
 
     // listar solo los brands
-    List<CategoriaDTO> brandCarListToBrandCarDtoList(List<CategoriaEntity> categoriaEntityList);
+    List<CategoriaDTO> categoryListToCategoryDtoList(List<CategoriaEntity> categoriaEntityList);
 
 }

@@ -1,5 +1,6 @@
 package com.gestionpedidos.dtos;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProductoDTO {
 
+    @Hidden
     private Long id;
+
 
     private Long categoriaId;
 

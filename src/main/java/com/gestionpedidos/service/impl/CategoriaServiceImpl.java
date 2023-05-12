@@ -2,11 +2,13 @@ package com.gestionpedidos.service.impl;
 
 import com.gestionpedidos.dtos.CategoriaDTO;
 import com.gestionpedidos.dtos.ProductoDTO;
+import com.gestionpedidos.exception.BusinessException;
 import com.gestionpedidos.mapper.CategoriaMapper;
 import com.gestionpedidos.persistence.entities.CategoriaEntity;
 import com.gestionpedidos.persistence.respitories.CategoriaRepository;
 import com.gestionpedidos.service.ICategoriaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,17 +24,23 @@ public class CategoriaServiceImpl implements ICategoriaService {
 
     @Override
     public List<CategoriaDTO> listCategories() {
-        List<CategoriaEntity> categoriaEntities = categoriaRepository.findAll();
-        return categoriaMapper.brandCarListToBrandCarDtoList(categoriaEntities);
+        List<CategoriaEntity> productoEntities = categoriaRepository.findAll();
+        return Optional.of(productoEntities)
+                .filter(list -> !list.isEmpty())
+                .map(categoriaMapper::categoryListToCategoryDtoList)
+                .orElseThrow(() -> new BusinessException("P-204", HttpStatus.NO_CONTENT, "Lista Vacia de Productos"));
     }
 
     @Override
     public List<CategoriaDTO> listCategoryAndProducts() {
         List<CategoriaEntity> categoriaEntities = categoriaRepository.findAll();
+        if (categoriaEntities.isEmpty()) {
+            throw new BusinessException("P-204", HttpStatus.NO_CONTENT, "No se encontraron categorías");
+        }
         return categoriaEntities.stream()
-                .map(category ->{
+                .map(category -> {
                     CategoriaDTO categoriaDTO = categoriaMapper.toDTO(category);
-                    List<ProductoDTO> productoDTOList = categoriaMapper.carsToCarDtos(category.getProductos());
+                    List<ProductoDTO> productoDTOList = categoriaMapper.productsToProductsDtos(category.getProductos());
                     categoriaDTO.setProductos(productoDTOList);
                     return categoriaDTO;
                 })
@@ -41,8 +49,9 @@ public class CategoriaServiceImpl implements ICategoriaService {
 
     @Override
     public Optional<CategoriaDTO> getCategoryById(Long id) {
-        Optional<CategoriaEntity> categoriaEntityOptional = categoriaRepository.findById(id);
-        return categoriaEntityOptional.map(categoriaMapper::toDTO);
+        return Optional.ofNullable(categoriaRepository.findById(id)
+                .map(categoriaMapper::toDTO)
+                .orElseThrow(() -> new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id de la Categoria no existe " + id)));
     }
 
     @Override
@@ -54,14 +63,18 @@ public class CategoriaServiceImpl implements ICategoriaService {
 
     @Override
     public CategoriaDTO updateCategory(Long id, CategoriaDTO categoriaDTO) {
-        CategoriaEntity categoriaEntity = categoriaRepository.findById(id).get();
-        categoriaMapper.updateBrandCarFromDto(categoriaDTO, categoriaEntity);
+        CategoriaEntity categoriaEntity = categoriaRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id de la Categoria no existe " + id));
+        categoriaMapper.updateCategoryFromDto(categoriaDTO, categoriaEntity);
         categoriaEntity = categoriaRepository.save(categoriaEntity);
         return categoriaMapper.toDTO(categoriaEntity);
     }
 
     @Override
     public void deleteCategory(Long id) {
+        if (!categoriaRepository.existsById(id)) {
+            throw new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id de la Categoria no existe");
+        }
         categoriaRepository.deleteById(id);
     }
 }

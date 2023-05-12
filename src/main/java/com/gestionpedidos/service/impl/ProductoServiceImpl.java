@@ -1,6 +1,7 @@
 package com.gestionpedidos.service.impl;
 
 import com.gestionpedidos.dtos.ProductoDTO;
+import com.gestionpedidos.exception.BusinessException;
 import com.gestionpedidos.mapper.ProductoMapper;
 import com.gestionpedidos.persistence.entities.CategoriaEntity;
 import com.gestionpedidos.persistence.entities.ProductoEntity;
@@ -8,6 +9,7 @@ import com.gestionpedidos.persistence.respitories.CategoriaRepository;
 import com.gestionpedidos.persistence.respitories.ProductoRepository;
 import com.gestionpedidos.service.IProductoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,20 +25,25 @@ public class ProductoServiceImpl implements IProductoService {
 
     @Override
     public List<ProductoDTO> listProducts() {
-        return productoMapper.productsToProdudctDtos(productoRepository.findAll());
+        List<ProductoEntity> productoEntities = productoRepository.findAll();
+        return Optional.of(productoEntities)
+                .filter(list -> !list.isEmpty())
+                .map(productoMapper::productsToProdudctDtos)
+                .orElseThrow(() -> new BusinessException("P-204", HttpStatus.NO_CONTENT, "Lista Vacia de Productos"));
     }
+
 
     @Override
     public Optional<ProductoDTO> getProductById(Long id) {
         return Optional.ofNullable(productoRepository.findById(id)
                 .map(productoMapper::toDTO)
-                .orElseThrow(() -> new RuntimeException("P-400"+id + "El Id del Carro no existe ")));
+                .orElseThrow(() -> new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id del Producto no existe "+ id)));
     }
 
     @Override
     public ProductoDTO createProduct(ProductoDTO productoDTO) {
         CategoriaEntity categoriaEntity = categoriaRepository.findById(productoDTO.getCategoriaId())
-                .orElseThrow(() -> new RuntimeException("P-400"+ productoDTO.getCategoriaId()+ "El Id del Carro no existe "));
+                .orElseThrow(() -> new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id del Producto no existe " + productoDTO.getCategoriaId()));
         ProductoEntity productoEntity = productoMapper.toEntity(productoDTO);
         productoEntity.setCategoria(categoriaEntity);
         ProductoEntity savedProductEntity = productoRepository.save(productoEntity);
@@ -46,7 +53,7 @@ public class ProductoServiceImpl implements IProductoService {
     @Override
     public ProductoDTO updateProduct(Long id, ProductoDTO productoDTO) {
         ProductoEntity productEntity = productoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("P-400"));
+                .orElseThrow(() -> new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id del Producto no existe " + id));
 
         productoMapper.updateProductoFromDto(productoDTO, productEntity);
 
@@ -56,6 +63,9 @@ public class ProductoServiceImpl implements IProductoService {
 
     @Override
     public void deleteProduct(Long id) {
+        if (!productoRepository.existsById(id)) {
+            throw new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id del Producto no existe");
+        }
         productoRepository.deleteById(id);
     }
 }
