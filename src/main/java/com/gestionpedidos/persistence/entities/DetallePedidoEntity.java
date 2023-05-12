@@ -28,7 +28,7 @@ public class DetallePedidoEntity {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PedidoEntity pedido;
 
-    @JoinColumn(name = "productoId", referencedColumnName = "productoId")
+    @JoinColumn(name = "productoId", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ProductoEntity producto;
 

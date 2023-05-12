@@ -1,4 +1,4 @@
-package com.gestionpedidos.dtos.request;
+package com.gestionpedidos.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoriaRequest {
-
-    private Long categoriaId;
-
-    private String nombre;
+public class HistorialpedidoDTO {
+    private Long pedidoId;
 }

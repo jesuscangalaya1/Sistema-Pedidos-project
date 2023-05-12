@@ -1,6 +1,5 @@
-package com.gestionpedidos.dtos.request;
+package com.gestionpedidos.dtos;
 
-import com.gestionpedidos.persistence.entities.CategoriaEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductoRequest {
+public class ProductoDTO {
 
-    private Long productoId;
+    private Long id;
 
-    private CategoriaEntity categoria;
+    private Long categoriaId;
 
     private Double precio;
 

@@ -1,5 +1,6 @@
 package com.gestionpedidos.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,10 +21,11 @@ public class ProductoEntity {
     @Id
     @SequenceGenerator(name = "productos_id_generator", sequenceName = "productos_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "productos_id_generator")
-    private Long productoId;
+    private Long id;
 
-    @JoinColumn(name = "categoriaId", referencedColumnName = "categoriaId")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id",nullable = false)
     private CategoriaEntity categoria;
 
     private Double precio;

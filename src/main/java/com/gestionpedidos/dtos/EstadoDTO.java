@@ -1,4 +1,4 @@
-package com.gestionpedidos.dtos.request;
+package com.gestionpedidos.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EstadoRequest {
+public class EstadoDTO {
 
     private Long estadoId;
 

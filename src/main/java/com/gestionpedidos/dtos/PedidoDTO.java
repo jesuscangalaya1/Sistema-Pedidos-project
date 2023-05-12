@@ -1,4 +1,4 @@
-package com.gestionpedidos.dtos.request;
+package com.gestionpedidos.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,11 +12,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PedidoRequest {
+public class PedidoDTO {
 
     //private ClientesRequest cliente;
 
-    private List<DetallePedidoRequest> detallePedidos;
+    private List<DetallePedidoDTO> detallePedidos;
 
     private Date fechaEntrega;
 }

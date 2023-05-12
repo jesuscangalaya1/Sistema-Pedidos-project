@@ -1,4 +1,4 @@
-package com.gestionpedidos.dtos.request;
+package com.gestionpedidos.dtos;
 
 import com.gestionpedidos.persistence.entities.ProductoEntity;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetallePedidoRequest {
+public class DetallePedidoDTO {
 
     @NotBlank
     private ProductoEntity producto;
