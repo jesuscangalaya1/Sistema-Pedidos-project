@@ -18,14 +18,6 @@ public class CategoriaControllerImpl implements ICategoriaController {
     private final ICategoriaService categoriaService;
 
     @Override
-    public RestResponse<List<CategoriaDTO>> listCategoyAndProducts() {
-        return new RestResponse<>("SUCCESS",
-                String.valueOf(HttpStatus.OK),
-                "CATEGORY AND PRODUCTS SUCCESSFULLY READED",
-                categoriaService.listCategoryAndProducts());
-    }
-
-    @Override
     public RestResponse<List<CategoriaDTO>> listCategories() {
         return new RestResponse<>("SUCCESS",
                 String.valueOf(HttpStatus.OK),

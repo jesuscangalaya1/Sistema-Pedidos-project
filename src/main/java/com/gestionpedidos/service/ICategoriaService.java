@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface ICategoriaService {
 
     List<CategoriaDTO> listCategories();
-    List<CategoriaDTO> listCategoryAndProducts();
     Optional<CategoriaDTO> getCategoryById(Long id);
     CategoriaDTO createCategory(CategoriaDTO categoriaDTO);
     CategoriaDTO updateCategory(Long id, CategoriaDTO categoriaDTO);

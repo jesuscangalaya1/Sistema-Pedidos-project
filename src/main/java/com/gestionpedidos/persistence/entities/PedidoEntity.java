@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="pedidos")
@@ -28,9 +31,18 @@ public class PedidoEntity {
     private ClienteEntity cliente;
 
 
-    @JoinColumn(name = "estadoId", referencedColumnName = "estadoId")
+    @JoinColumn(name = "estadoId")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private EstadoEntity estado;
 
     private Date fechaEntrega;
+
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetallePedidoEntity> detallePedidos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HistorialpedidoEntity> historialpedidos = new ArrayList<>();
+
+
 }

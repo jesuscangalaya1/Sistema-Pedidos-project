@@ -1,6 +1,7 @@
 package com.gestionpedidos.service.impl;
 
 import com.gestionpedidos.dtos.ProductoDTO;
+import com.gestionpedidos.dtos.request.ProductoDTORequest;
 import com.gestionpedidos.exception.BusinessException;
 import com.gestionpedidos.mapper.ProductoMapper;
 import com.gestionpedidos.persistence.entities.CategoriaEntity;
@@ -24,7 +25,7 @@ public class ProductoServiceImpl implements IProductoService {
     private final CategoriaRepository categoriaRepository;
 
     @Override
-    public List<ProductoDTO> listProducts() {
+    public List<ProductoDTORequest> listProducts() {
         List<ProductoEntity> productoEntities = productoRepository.findAll();
         return Optional.of(productoEntities)
                 .filter(list -> !list.isEmpty())
@@ -34,11 +35,14 @@ public class ProductoServiceImpl implements IProductoService {
 
 
     @Override
-    public Optional<ProductoDTO> getProductById(Long id) {
-        return Optional.ofNullable(productoRepository.findById(id)
-                .map(productoMapper::toDTO)
-                .orElseThrow(() -> new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id del Producto no existe "+ id)));
+    public Optional<ProductoDTORequest> getProductById(Long id) {
+        ProductoEntity entity = productoRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id del Producto no existe " + id));
+        return Optional.of(productoMapper.toDTOWithCategoria(entity));
     }
+
+
+
 
     @Override
     public ProductoDTO createProduct(ProductoDTO productoDTO) {
@@ -55,11 +59,20 @@ public class ProductoServiceImpl implements IProductoService {
         ProductoEntity productEntity = productoRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id del Producto no existe " + id));
 
+        // Verificar si la categoríaId es válida
+        Long categoriaId = productoDTO.getCategoriaId();
+        if (categoriaId != null) {
+            CategoriaEntity categoriaEntity = categoriaRepository.findById(categoriaId)
+                    .orElseThrow(() -> new BusinessException("P-400", HttpStatus.BAD_REQUEST, "El Id de la Categoría no existe " + categoriaId));
+            productEntity.setCategoria(categoriaEntity);
+        }
+
         productoMapper.updateProductoFromDto(productoDTO, productEntity);
 
         productEntity = productoRepository.save(productEntity);
         return productoMapper.toDTO(productEntity);
     }
+
 
     @Override
     public void deleteProduct(Long id) {

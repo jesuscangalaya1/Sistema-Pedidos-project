@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -15,10 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoriaDTO {
 
+    @Hidden
     private Long id;
 
     private String nombre;
 
-    @Hidden
-    private List<ProductoDTO> productos = new ArrayList<>();
 }

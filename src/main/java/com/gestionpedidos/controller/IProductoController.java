@@ -1,6 +1,7 @@
 package com.gestionpedidos.controller;
 
 import com.gestionpedidos.dtos.ProductoDTO;
+import com.gestionpedidos.dtos.request.ProductoDTORequest;
 import com.gestionpedidos.dtos.response.RestResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,10 +20,10 @@ import java.util.Optional;
 public interface IProductoController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    RestResponse<List<ProductoDTO>> listProducts();
+    RestResponse<List<ProductoDTORequest>> listProducts();
 
     @GetMapping(value ="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    RestResponse<Optional<ProductoDTO>> getProductById(
+    RestResponse<Optional<ProductoDTORequest>> getProductById(
             @Parameter(description = "El ID del Product a obtener", required = true)
             @PathVariable @Positive(message = "el ID solo acepta numeros positivos")
             Long id);

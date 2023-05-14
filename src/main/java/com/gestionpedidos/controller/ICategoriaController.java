@@ -18,9 +18,6 @@ import java.util.Optional;
 @RequestMapping("/api/categories")
 public interface ICategoriaController {
 
-    @GetMapping(value ="/categoryAndProducts", produces = MediaType.APPLICATION_JSON_VALUE)
-    RestResponse<List<CategoriaDTO>> listCategoyAndProducts();
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     RestResponse<List<CategoriaDTO>> listCategories();
 

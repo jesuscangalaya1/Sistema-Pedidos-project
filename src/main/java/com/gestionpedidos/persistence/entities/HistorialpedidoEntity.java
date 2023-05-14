@@ -25,13 +25,13 @@ public class HistorialpedidoEntity {
     private Long historialPedidoId;
 
     @JsonIgnore
-    @JoinColumn(name = "pedidoId", referencedColumnName = "pedidoId")
+    @JoinColumn(name = "pedidoId")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PedidoEntity pedido;
 
     private Date fecha;
 
-    @JoinColumn(name = "estadoId", referencedColumnName = "estadoId")
+    @JoinColumn(name = "estadoId")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private EstadoEntity estado;
 }

@@ -1,6 +1,6 @@
-package com.gestionpedidos.dtos;
+package com.gestionpedidos.dtos.request;
 
-import io.swagger.v3.oas.annotations.Hidden;
+import com.gestionpedidos.dtos.CategoriaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,12 +10,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductoDTO {
+            //ProductoRequest
+public class ProductoDTORequest {
 
-    @Hidden
+
     private Long id;
 
-    private Long categoriaId;
+    private CategoriaDTO categoria;
 
     private Double precio;
 
@@ -24,4 +25,6 @@ public class ProductoDTO {
     private String descripcion;
 
     private int stock;
+
+
 }

@@ -14,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class DetallePedidoDTO {
 
+    private Long id;
     @NotBlank
     private ProductoEntity producto;
 

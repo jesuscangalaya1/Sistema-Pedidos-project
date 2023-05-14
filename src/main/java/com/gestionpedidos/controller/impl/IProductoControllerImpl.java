@@ -2,6 +2,7 @@ package com.gestionpedidos.controller.impl;
 
 import com.gestionpedidos.controller.IProductoController;
 import com.gestionpedidos.dtos.ProductoDTO;
+import com.gestionpedidos.dtos.request.ProductoDTORequest;
 import com.gestionpedidos.dtos.response.RestResponse;
 import com.gestionpedidos.service.IProductoService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class IProductoControllerImpl implements IProductoController {
     private final IProductoService productoService;
 
     @Override
-    public RestResponse<List<ProductoDTO>> listProducts() {
+    public RestResponse<List<ProductoDTORequest>> listProducts() {
         return new RestResponse<>("SUCCESS",
                 String.valueOf(HttpStatus.OK),
                 "PRODUCT SUCCESSFULLY READED",
@@ -26,7 +27,7 @@ public class IProductoControllerImpl implements IProductoController {
     }
 
     @Override
-    public RestResponse<Optional<ProductoDTO>> getProductById(Long id) {
+    public RestResponse<Optional<ProductoDTORequest>> getProductById(Long id) {
         return new RestResponse<>("SUCCESS",
                 String.valueOf(HttpStatus.OK),
                 "PRODUCT ID: " + id + " SUCCESSFULLY READED",

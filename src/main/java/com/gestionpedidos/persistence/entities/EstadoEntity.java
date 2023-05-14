@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="estados")
@@ -25,5 +28,11 @@ public class EstadoEntity {
     @Column(nullable = false)
     private String nombre;
 
+
+    @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HistorialpedidoEntity> historialpedidos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PedidoEntity> pedidos = new ArrayList<>();
 
 }

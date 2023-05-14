@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="productos")
@@ -24,8 +26,8 @@ public class ProductoEntity {
     private Long id;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoria_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "categoria_id" )
     private CategoriaEntity categoria;
 
     private Double precio;
@@ -35,4 +37,9 @@ public class ProductoEntity {
     private String descripcion;
 
     private int stock;
+
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetallePedidoEntity> detallePedidos = new ArrayList<>();
+
+
 }
