@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class EstadoDTO {
 
-    private Long estadoId;
+    private Long id;
 
     @NotBlank
     private String nombre;

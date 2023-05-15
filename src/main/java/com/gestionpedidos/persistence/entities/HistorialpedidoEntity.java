@@ -22,16 +22,21 @@ public class HistorialpedidoEntity {
     @Id
     @SequenceGenerator(name = "historialpedidos_id_generator", sequenceName = "historialpedidos_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "historialpedidos_id_generator")
-    private Long historialPedidoId;
+    private Long id;
 
     @JsonIgnore
-    @JoinColumn(name = "pedidoId")
+    @JoinColumn(name = "pedidoId", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PedidoEntity pedido;
 
     private Date fecha;
 
-    @JoinColumn(name = "estadoId")
+
+
+    //No deberia ir aqui segun el diagrama...
+/*    @JoinColumn(name = "estadoId", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private EstadoEntity estado;
+    private EstadoEntity estado;*/
+
+
 }

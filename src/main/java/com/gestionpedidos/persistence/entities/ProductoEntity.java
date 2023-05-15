@@ -26,8 +26,8 @@ public class ProductoEntity {
     private Long id;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY )
-    @JoinColumn(name = "categoria_id" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private CategoriaEntity categoria;
 
     private Double precio;
@@ -37,9 +37,5 @@ public class ProductoEntity {
     private String descripcion;
 
     private int stock;
-
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DetallePedidoEntity> detallePedidos = new ArrayList<>();
-
 
 }

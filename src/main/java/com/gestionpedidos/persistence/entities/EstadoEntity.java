@@ -23,16 +23,9 @@ public class EstadoEntity {
     @Id
     @SequenceGenerator(name = "estados_id_generator", sequenceName = "estados_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "estados_id_generator")
-    private Long estadoId;
+    private Long id;
 
     @Column(nullable = false)
     private String nombre;
-
-
-    @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<HistorialpedidoEntity> historialpedidos = new ArrayList<>();
-
-    @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PedidoEntity> pedidos = new ArrayList<>();
 
 }

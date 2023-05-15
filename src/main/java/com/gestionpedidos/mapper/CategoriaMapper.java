@@ -11,7 +11,6 @@ import java.util.List;
 @Mapper(uses = {ProductoMapper.class})
 public interface CategoriaMapper {
 
-    //@Mapping(source = "productos", target = "productos" , ignore = true)
     CategoriaDTO toDTO(CategoriaEntity categoriaEntity);
 
     @InheritInverseConfiguration
@@ -22,7 +21,7 @@ public interface CategoriaMapper {
     @Mapping(target = "id", ignore = true)
     void updateCategoryFromDto(CategoriaDTO categoriaDTO, @MappingTarget CategoriaEntity categoriaEntity);
 
-    // listar solo los brands
+    // listar solo las categories
     List<CategoriaDTO> categoryListToCategoryDtoList(List<CategoriaEntity> categoriaEntityList);
 
 }

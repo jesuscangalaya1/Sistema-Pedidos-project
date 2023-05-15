@@ -1,4 +1,4 @@
-package com.gestionpedidos.dtos;
+package com.gestionpedidos.dtos.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,14 +11,13 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetallePedidoDTO {
+public class DetallePedidoDTORequest {
 
     private Long id;
 
     @NotBlank
-    //private Long pedidoId;
+    private ProductoDTORequest producto;
 
-    private Long productoId;
 
     @NotBlank
     private Long cantidad;

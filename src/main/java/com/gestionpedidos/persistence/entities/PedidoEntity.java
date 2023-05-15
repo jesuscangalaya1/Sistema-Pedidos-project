@@ -5,10 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -24,25 +25,22 @@ public class PedidoEntity {
     @Id
     @SequenceGenerator(name = "pedidos_id_generator", sequenceName = "pedidos_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "pedidos_id_generator")
-    private Long pedidoId ;
+    private Long id ;
 
-    @JoinColumn(name = "clienteId", referencedColumnName = "clienteId")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private ClienteEntity cliente;
+/*    @JoinColumn(name = "clienteId", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ClienteEntity cliente;*/
 
 
-    @JoinColumn(name = "estadoId")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "estadoId", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private EstadoEntity estado;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
 
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DetallePedidoEntity> detallePedidos = new ArrayList<>();
-
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<HistorialpedidoEntity> historialpedidos = new ArrayList<>();
 
 
 }

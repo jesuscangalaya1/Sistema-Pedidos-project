@@ -21,7 +21,7 @@ public class ClienteEntity {
     @Id
     @SequenceGenerator(name = "clientes_id_generator", sequenceName = "clientes_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "clientes_id_generator")
-    private Long clienteId;
+    private Long id;
 
     @Column(nullable = false)
     private String nombre;

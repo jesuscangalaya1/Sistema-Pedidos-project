@@ -1,10 +1,11 @@
-package com.gestionpedidos.dtos;
+package com.gestionpedidos.dtos.request;
 
+import com.gestionpedidos.dtos.ClienteDTO;
+import com.gestionpedidos.dtos.DetallePedidoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -13,15 +14,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PedidoDTO {
+public class PedidoDTORequest {
 
-    private Long id;
+    private ClienteDTO cliente;
 
-    //private Long clienteId;
+    private List<DetallePedidoDTO> detallePedidos;
 
-    private Long estadoId;
-
-    @DateTimeFormat
     private Date fechaEntrega;
-
 }

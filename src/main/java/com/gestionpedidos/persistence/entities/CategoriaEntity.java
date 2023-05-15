@@ -27,7 +27,4 @@ public class CategoriaEntity {
     @Column(nullable = false)
     private String nombre;
 
-/*    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductoEntity> productos = new ArrayList<>();*/
-
 }

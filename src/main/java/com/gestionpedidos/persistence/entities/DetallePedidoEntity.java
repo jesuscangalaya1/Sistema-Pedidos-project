@@ -27,15 +27,15 @@ public class DetallePedidoEntity {
     @GeneratedValue(
             generator = "detallePedidos_id_generator"
     )
-    private Long detallePedidoId;
+    private Long id;
 
-    @JsonBackReference
-    @JoinColumn(name = "pedidoId")
+    @JsonIgnore
+    @JoinColumn(name = "pedidoId", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PedidoEntity pedido;
 
     @JsonBackReference
-    @JoinColumn(name = "productoId")
+    @JoinColumn(name = "productoId", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ProductoEntity producto;
 
